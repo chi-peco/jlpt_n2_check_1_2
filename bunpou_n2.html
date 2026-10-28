@@ -6,26 +6,13 @@
 <title>N2 文法 模擬試験 第1回</title>
 <style>
   :root {
-    --bg: #f9f7f3;
-    --card-bg: #ffffff;
-    --fg: #2c2c2c;
-    --fg-sub: #555;
-    --accent: #3a6b8a;
-    --accent-light: #e8f0f6;
-    --border: #d0ccc4;
-    --ruby-color: #3a6b8a;
-    --ans-bg: #eaf4fb;
-    --ans-border: #3a6b8a;
-    --sent-bg: #f0f7ed;
-    --sent-border: #5a9a5a;
-    --btn-bg: #3a6b8a;
-    --btn-hover: #2d5470;
-    --header-bg: #3a6b8a;
-    --problem-header: #4a7a9a;
-    --blank: #3a6b8a;
-    --star-blank: #c0392b;
-    --passage-bg: #fdfcf8;
-    --passage-border: #c0b090;
+    --bg: #f9f7f3; --card-bg: #ffffff; --fg: #2c2c2c; --fg-sub: #555;
+    --accent: #3a6b8a; --accent-light: #e8f0f6; --border: #d0ccc4;
+    --ruby-color: #3a6b8a; --ans-bg: #eaf4fb; --ans-border: #3a6b8a;
+    --sent-bg: #f0f7ed; --sent-border: #5a9a5a; --btn-bg: #3a6b8a;
+    --btn-hover: #2d5470; --header-bg: #3a6b8a; --problem-header: #4a7a9a;
+    --blank: #3a6b8a; --star-blank: #c0392b;
+    --passage-bg: #fdfcf8; --passage-border: #c0b090;
     color-scheme: light;
   }
   @media (prefers-color-scheme: dark) {
@@ -142,8 +129,9 @@
     border-radius: 8px; padding: 18px 20px; line-height: 2.1;
     font-size: 0.96rem; margin-bottom: 14px;
   }
-  .passage-title { text-align: center; font-size: 1.08rem; font-weight: bold; margin-bottom: 14px; }
+  .passage-title { text-align: center; font-size: 1.08rem; font-weight: bold; margin-bottom: 10px; }
   .passage-note { font-size: 0.82rem; color: var(--fg-sub); margin-top: 10px; border-top: 1px dashed var(--border); padding-top: 7px; }
+  .passage-para { margin-top: 10px; }
   .box-num {
     display: inline-block; border: 1.5px solid var(--accent); border-radius: 3px;
     padding: 0 4px; font-size: 0.85em; font-weight: bold; color: var(--accent);
@@ -533,12 +521,29 @@
 
     <div class="passage-box">
       <div class="passage-title">わびさび</div>
-      <p><ruby>日本<rt>にほん</rt></ruby>では、<ruby>静<rt>しず</rt></ruby>かな<ruby>古<rt>ふる</rt></ruby>いお<ruby>寺<rt>てら</rt></ruby>などに<ruby>行<rt>い</rt></ruby>ったとき「わびさび」を<ruby>感<rt>かん</rt></ruby>じると<ruby>言<rt>い</rt></ruby>うことがあります。これは、<ruby>日本人<rt>にほんじん</rt></ruby>が<ruby>感<rt>かん</rt></ruby>じる<ruby>美意識<rt>びいしき</rt></ruby>の<ruby>一<rt>ひと</rt></ruby>つですが、<ruby>言葉<rt>ことば</rt></ruby>で<ruby>説明<rt>せつめい</rt></ruby>するのはなかなか<ruby>難<rt>むずか</rt></ruby>しい<span class="box-num">48</span>。</p>
-      <p style="margin-top:10px;">まず、「わび」という<ruby>言葉<rt>ことば</rt></ruby>は、およそ600<ruby>年前<rt>ねんまえ</rt></ruby>の<ruby>室町時代<rt>むろまちじだい</rt></ruby>に<ruby>生<rt>う</rt></ruby>まれたと<ruby>言<rt>い</rt></ruby>われています。このころの<ruby>貴族<rt>きぞく</rt></ruby>や<ruby>武士<rt>ぶし</rt></ruby>の<ruby>間<rt>あいだ</rt></ruby>で<ruby>行<rt>おこな</rt></ruby>われていた<ruby>茶会<rt>ちゃかい</rt></ruby>は、<ruby>高価<rt>こうか</rt></ruby>で<ruby>派手<rt>はで</rt></ruby>な<ruby>中国製<rt>ちゅうごくせい</rt></ruby>の<ruby>茶道具<rt>ちゃどうぐ</rt></ruby>を<ruby>使<rt>つか</rt></ruby>う<ruby>豪華<rt>ごうか</rt></ruby>なものだったそうです。</p>
-      <p style="margin-top:10px;"><span class="box-num">49</span>、そんな<ruby>豪華<rt>ごうか</rt></ruby>な<ruby>茶会<rt>ちゃかい</rt></ruby>を<ruby>否定<rt>ひてい</rt></ruby>する<ruby>人物<rt>じんぶつ</rt></ruby>が<ruby>現<rt>あらわ</rt></ruby>れました。<ruby>村田珠光<rt>むらたじゅこう</rt></ruby>という<ruby>人物<rt>じんぶつ</rt></ruby>です。<ruby>彼<rt>かれ</rt></ruby>は<ruby>日本<rt>にほん</rt></ruby>の<ruby>茶道具<rt>ちゃどうぐ</rt></ruby>を<ruby>使<rt>つか</rt></ruby>った<ruby>地味<rt>じみ</rt></ruby>な「わび<ruby>茶<rt>ちゃ</rt></ruby>」を<ruby>生<rt>う</rt></ruby>み<ruby>出<rt>だ</rt></ruby>しました。<ruby>彼<rt>かれ</rt></ruby>の<ruby>考<rt>かんが</rt></ruby>え<ruby>方<rt>かた</rt></ruby>に、<span class="box-num">50</span>があります。「<ruby>雲<rt>くも</rt></ruby>に<ruby>隠<rt>かく</rt></ruby>されずに<ruby>光<rt>ひか</rt></ruby>り<ruby>輝<rt>かがや</rt></ruby>く<ruby>月<rt>つき</rt></ruby>よりも、<ruby>雲<rt>くも</rt></ruby>の<ruby>間<rt>あいだ</rt></ruby>に<ruby>隠<rt>かく</rt></ruby>れた<ruby>月<rt>つき</rt></ruby>のほうが<ruby>味<rt>あじ</rt></ruby>わい<ruby>深<rt>ふか</rt></ruby>い」。この、<ruby>不完全<rt>ふかんぜん</rt></ruby>の<ruby>中<rt>なか</rt></ruby>に<ruby>美<rt>うつく</rt></ruby>しさがあるという<ruby>美意識<rt>びいしき</rt></ruby>が、「わび<ruby>茶<rt>ちゃ</rt></ruby>」の<ruby>中<rt>なか</rt></ruby>にはありました。</p>
-      <p style="margin-top:10px;">そして<ruby>時<rt>とき</rt></ruby>が<ruby>経<rt>た</rt></ruby>ち、<ruby>現在<rt>げんざい</rt></ruby>の<ruby>茶道<rt>ちゃどう</rt></ruby>を<ruby>作<rt>つく</rt></ruby>り<ruby>上<rt>あ</rt></ruby>げた<ruby>人物<rt>じんぶつ</rt></ruby>として<ruby>有名<rt>ゆうめい</rt></ruby>な<ruby>千利休<rt>せんのりきゅう</rt></ruby>が<ruby>現<rt>あらわ</rt></ruby>れます。<ruby>彼<rt>かれ</rt></ruby>は、<ruby>珠光<rt>じゅこう</rt></ruby>の<ruby>考<rt>かんが</rt></ruby>え<ruby>方<rt>かた</rt></ruby>を<ruby>茶道具<rt>ちゃどうぐ</rt></ruby>、<ruby>作法<rt>さほう</rt></ruby>、<ruby>空間<rt>くうかん</rt></ruby><ruby>全<rt>すべ</rt></ruby>てに<ruby>表現<rt>ひょうげん</rt></ruby>しました。<ruby>茶室<rt>ちゃしつ</rt></ruby>の<ruby>生<rt>い</rt></ruby>け<ruby>花<rt>ばな</rt></ruby>は「<ruby>花<rt>はな</rt></ruby>は<ruby>野<rt>の</rt></ruby>にあるように」という<span class="box-num">51</span>、<ruby>自然<rt>しぜん</rt></ruby>のままに<ruby>咲<rt>さ</rt></ruby>いているように<ruby>生<rt>い</rt></ruby>けることを<ruby>目指<rt>めざ</rt></ruby>したそうです。この<ruby>精神<rt>せいしん</rt></ruby>が、<ruby>不完全<rt>ふかんぜん</rt></ruby>でも<ruby>自然<rt>しぜん</rt></ruby>に<ruby>作<rt>つく</rt></ruby>られたものが<ruby>美<rt>うつく</rt></ruby>しいと<ruby>考<rt>かんが</rt></ruby>える「わび」なのです。</p>
-      <p style="margin-top:10px;">では「さび」にはどんな<ruby>意味<rt>いみ</rt></ruby>があるのでしょうか。もともとは、<ruby>活気<rt>かっき</rt></ruby>が<ruby>失<rt>うしな</rt></ruby>われる、<ruby>時<rt>とき</rt></ruby>が<ruby>経<rt>た</rt></ruby>って<ruby>古<rt>ふる</rt></ruby>くなるという<ruby>意味<rt>いみ</rt></ruby>があったそうですが、あとから「<ruby>人<rt>ひと</rt></ruby>のいない<ruby>静<rt>しず</rt></ruby>かな<ruby>状態<rt>じょうたい</rt></ruby>」という<ruby>意味<rt>いみ</rt></ruby>も<ruby>加<rt>くわ</rt></ruby>わり、「<ruby>人<rt>ひと</rt></ruby>がいなくて<ruby>静<rt>しず</rt></ruby>かな、<ruby>古<rt>ふる</rt></ruby>い<ruby>状態<rt>じょうたい</rt></ruby>」を<ruby>指<rt>さ</rt></ruby>すようになりました。これは、<ruby>歴史的<rt>れきしてき</rt></ruby>な<ruby>建物<rt>たてもの</rt></ruby>など、<ruby>古<rt>ふる</rt></ruby>いものだから<span class="box-num">52</span><ruby>良<rt>よ</rt></ruby>さに<ruby>当<rt>あ</rt></ruby>たるのではないでしょうか。</p>
-      <p style="margin-top:10px;"><ruby>日本<rt>にほん</rt></ruby>の「わびさび」という<ruby>言葉<rt>ことば</rt></ruby>は、<ruby>日本人<rt>にほんじん</rt></ruby>の<ruby>落<rt>お</rt></ruby>ち<ruby>着<rt>つ</rt></ruby>いた<ruby>心<rt>こころ</rt></ruby>を<ruby>表<rt>あらわ</rt></ruby>しているとも<ruby>言<rt>い</rt></ruby>えます。<ruby>日本<rt>にほん</rt></ruby>のお<ruby>寺<rt>てら</rt></ruby>に<ruby>行<rt>い</rt></ruby>ったときは、ぜひこの「わびさび」の<ruby>雰囲気<rt>ふんいき</rt></ruby>を<ruby>味<rt>あじ</rt></ruby>わいたいものです。</p>
+      <div class="btn-row" style="margin-bottom:12px;">
+        <button class="btn-ruby" onclick="toggleRuby()">ル</button>
+        <button class="btn-sent" onclick="toggleAllPassageSent()">文 本文</button>
+      </div>
+
+      <p class="passage-para"><ruby>日本<rt>にほん</rt></ruby>では、<ruby>静<rt>しず</rt></ruby>かな<ruby>古<rt>ふる</rt></ruby>いお<ruby>寺<rt>てら</rt></ruby>などに<ruby>行<rt>い</rt></ruby>ったとき「わびさび」を<ruby>感<rt>かん</rt></ruby>じると<ruby>言<rt>い</rt></ruby>うことがあります。これは、<ruby>日本人<rt>にほんじん</rt></ruby>が<ruby>感<rt>かん</rt></ruby>じる<ruby>美意識<rt>びいしき</rt></ruby>の<ruby>一<rt>ひと</rt></ruby>つですが、<ruby>言葉<rt>ことば</rt></ruby>で<ruby>説明<rt>せつめい</rt></ruby>するのはなかなか<ruby>難<rt>むずか</rt></ruby>しい<span class="box-num">48</span>。</p>
+      <div class="sent-id" id="sent-p1">Di Jepang, saat mengunjungi kuil tua yang tenang, orang sering berkata merasakan "wabi-sabi". Ini adalah salah satu estetika yang dirasakan orang Jepang, namun cukup sulit untuk dijelaskan dengan kata-kata <span class="box-num">48</span>.</div>
+
+      <p class="passage-para">まず、「わび」という<ruby>言葉<rt>ことば</rt></ruby>は、およそ600<ruby>年前<rt>ねんまえ</rt></ruby>の<ruby>室町時代<rt>むろまちじだい</rt></ruby>に<ruby>生<rt>う</rt></ruby>まれたと<ruby>言<rt>い</rt></ruby>われています。このころの<ruby>貴族<rt>きぞく</rt></ruby>や<ruby>武士<rt>ぶし</rt></ruby>の<ruby>間<rt>あいだ</rt></ruby>で<ruby>行<rt>おこな</rt></ruby>われていた<ruby>茶会<rt>ちゃかい</rt></ruby>は、<ruby>高価<rt>こうか</rt></ruby>で<ruby>派手<rt>はで</rt></ruby>な<ruby>中国製<rt>ちゅうごくせい</rt></ruby>の<ruby>茶道具<rt>ちゃどうぐ</rt></ruby>を<ruby>使<rt>つか</rt></ruby>う<ruby>豪華<rt>ごうか</rt></ruby>なものだったそうです。</p>
+      <div class="sent-id" id="sent-p2">Pertama, kata "wabi" dikatakan lahir sekitar 600 tahun lalu pada zaman Muromachi. Upacara minum teh yang dilakukan oleh kalangan bangsawan dan samurai pada masa itu konon merupakan acara mewah menggunakan peralatan teh buatan China yang mahal dan mencolok.</div>
+
+      <p class="passage-para"><span class="box-num">49</span>、そんな<ruby>豪華<rt>ごうか</rt></ruby>な<ruby>茶会<rt>ちゃかい</rt></ruby>を<ruby>否定<rt>ひてい</rt></ruby>する<ruby>人物<rt>じんぶつ</rt></ruby>が<ruby>現<rt>あらわ</rt></ruby>れました。<ruby>村田珠光<rt>むらたじゅこう</rt></ruby>という<ruby>人物<rt>じんぶつ</rt></ruby>です。<ruby>彼<rt>かれ</rt></ruby>は<ruby>日本<rt>にほん</rt></ruby>の<ruby>茶道具<rt>ちゃどうぐ</rt></ruby>を<ruby>使<rt>つか</rt></ruby>った<ruby>地味<rt>じみ</rt></ruby>な「わび<ruby>茶<rt>ちゃ</rt></ruby>」を<ruby>生<rt>う</rt></ruby>み<ruby>出<rt>だ</rt></ruby>しました。<ruby>彼<rt>かれ</rt></ruby>の<ruby>考<rt>かんが</rt></ruby>え<ruby>方<rt>かた</rt></ruby>に、<span class="box-num">50</span>があります。「<ruby>雲<rt>くも</rt></ruby>に<ruby>隠<rt>かく</rt></ruby>されずに<ruby>光<rt>ひか</rt></ruby>り<ruby>輝<rt>かがや</rt></ruby>く<ruby>月<rt>つき</rt></ruby>よりも、<ruby>雲<rt>くも</rt></ruby>の<ruby>間<rt>あいだ</rt></ruby>に<ruby>隠<rt>かく</rt></ruby>れた<ruby>月<rt>つき</rt></ruby>のほうが<ruby>味<rt>あじ</rt></ruby>わい<ruby>深<rt>ふか</rt></ruby>い」。この、<ruby>不完全<rt>ふかんぜん</rt></ruby>の<ruby>中<rt>なか</rt></ruby>に<ruby>美<rt>うつく</rt></ruby>しさがあるという<ruby>美意識<rt>びいしき</rt></ruby>が、「わび<ruby>茶<rt>ちゃ</rt></ruby>」の<ruby>中<rt>なか</rt></ruby>にはありました。</p>
+      <div class="sent-id" id="sent-p3"><span class="box-num">49</span>, muncullah seseorang yang menolak upacara teh mewah seperti itu. Orang itu adalah Murata Juko. Ia menciptakan "wabi-cha" yang sederhana menggunakan peralatan teh buatan Jepang. Dalam cara berpikirnya terdapat <span class="box-num">50</span>. "Bulan yang tersembunyi di balik awan lebih berkesan daripada bulan yang bersinar terang tanpa terhalang awan". Estetika bahwa keindahan ada dalam ketidaksempurnaan inilah yang terkandung dalam "wabi-cha".</div>
+
+      <p class="passage-para">そして<ruby>時<rt>とき</rt></ruby>が<ruby>経<rt>た</rt></ruby>ち、<ruby>現在<rt>げんざい</rt></ruby>の<ruby>茶道<rt>ちゃどう</rt></ruby>を<ruby>作<rt>つく</rt></ruby>り<ruby>上<rt>あ</rt></ruby>げた<ruby>人物<rt>じんぶつ</rt></ruby>として<ruby>有名<rt>ゆうめい</rt></ruby>な<ruby>千利休<rt>せんのりきゅう</rt></ruby>が<ruby>現<rt>あらわ</rt></ruby>れます。<ruby>彼<rt>かれ</rt></ruby>は、<ruby>珠光<rt>じゅこう</rt></ruby>の<ruby>考<rt>かんが</rt></ruby>え<ruby>方<rt>かた</rt></ruby>を<ruby>茶道具<rt>ちゃどうぐ</rt></ruby>、<ruby>作法<rt>さほう</rt></ruby>、<ruby>空間<rt>くうかん</rt></ruby><ruby>全<rt>すべ</rt></ruby>てに<ruby>表現<rt>ひょうげん</rt></ruby>しました。<ruby>茶室<rt>ちゃしつ</rt></ruby>の<ruby>生<rt>い</rt></ruby>け<ruby>花<rt>ばな</rt></ruby>は「<ruby>花<rt>はな</rt></ruby>は<ruby>野<rt>の</rt></ruby>にあるように」という<span class="box-num">51</span>、<ruby>自然<rt>しぜん</rt></ruby>のままに<ruby>咲<rt>さ</rt></ruby>いているように<ruby>生<rt>い</rt></ruby>けることを<ruby>目指<rt>めざ</rt></ruby>したそうです。この<ruby>精神<rt>せいしん</rt></ruby>が、<ruby>不完全<rt>ふかんぜん</rt></ruby>でも<ruby>自然<rt>しぜん</rt></ruby>に<ruby>作<rt>つく</rt></ruby>られたものが<ruby>美<rt>うつく</rt></ruby>しいと<ruby>考<rt>かんが</rt></ruby>える「わび」なのです。</p>
+      <div class="sent-id" id="sent-p4">Seiring berjalannya waktu, muncullah Sen no Rikyu yang terkenal sebagai orang yang membangun seni teh (chadou) seperti sekarang. Ia mengekspresikan cara berpikir Juko dalam seluruh aspek peralatan, tata cara, dan ruang teh. Rangkaian bunga di ruang teh berdasarkan <span class="box-num">51</span> "bunga hendaknya seperti di padang", konon bertujuan merangkai bunga seakan-akan sedang mekar secara alami. Semangat inilah yang disebut "wabi", yaitu menganggap bahwa hal yang dibuat secara alami meskipun tidak sempurna itu indah.</div>
+
+      <p class="passage-para">では「さび」にはどんな<ruby>意味<rt>いみ</rt></ruby>があるのでしょうか。もともとは、<ruby>活気<rt>かっき</rt></ruby>が<ruby>失<rt>うしな</rt></ruby>われる、<ruby>時<rt>とき</rt></ruby>が<ruby>経<rt>た</rt></ruby>って<ruby>古<rt>ふる</rt></ruby>くなるという<ruby>意味<rt>いみ</rt></ruby>があったそうですが、あとから「<ruby>人<rt>ひと</rt></ruby>のいない<ruby>静<rt>しず</rt></ruby>かな<ruby>状態<rt>じょうたい</rt></ruby>」という<ruby>意味<rt>いみ</rt></ruby>も<ruby>加<rt>くわ</rt></ruby>わり、「<ruby>人<rt>ひと</rt></ruby>がいなくて<ruby>静<rt>しず</rt></ruby>かな、<ruby>古<rt>ふる</rt></ruby>い<ruby>状態<rt>じょうたい</rt></ruby>」を<ruby>指<rt>さ</rt></ruby>すようになりました。これは、<ruby>歴史的<rt>れきしてき</rt></ruby>な<ruby>建物<rt>たてもの</rt></ruby>など、<ruby>古<rt>ふる</rt></ruby>いものだから<span class="box-num">52</span><ruby>良<rt>よ</rt></ruby>さに<ruby>当<rt>あ</rt></ruby>たるのではないでしょうか。</p>
+      <div class="sent-id" id="sent-p5">Lalu, apa makna "sabi"? Awalnya dikatakan bermakna kehilangan semangat, menjadi tua seiring waktu. Kemudian ditambahkan makna "keadaan sunyi tanpa orang", sehingga menjadi merujuk pada "keadaan tua, sunyi tanpa orang". Ini mungkin termasuk dalam kebaikan yang <span class="box-num">52</span> justru bisa dirasakan karena merupakan bangunan bersejarah dan benda-benda tua.</div>
+
+      <p class="passage-para"><ruby>日本<rt>にほん</rt></ruby>の「わびさび」という<ruby>言葉<rt>ことば</rt></ruby>は、<ruby>日本人<rt>にほんじん</rt></ruby>の<ruby>落<rt>お</rt></ruby>ち<ruby>着<rt>つ</rt></ruby>いた<ruby>心<rt>こころ</rt></ruby>を<ruby>表<rt>あらわ</rt></ruby>しているとも<ruby>言<rt>い</rt></ruby>えます。<ruby>日本<rt>にほん</rt></ruby>のお<ruby>寺<rt>てら</rt></ruby>に<ruby>行<rt>い</rt></ruby>ったときは、ぜひこの「わびさび」の<ruby>雰囲気<rt>ふんいき</rt></ruby>を<ruby>味<rt>あじ</rt></ruby>わいたいものです。</p>
+      <div class="sent-id" id="sent-p6">Kata "wabi-sabi" dalam bahasa Jepang dapat dikatakan mencerminkan hati orang Jepang yang tenang. Saat mengunjungi kuil-kuil di Jepang, cobalah menikmati suasana "wabi-sabi" ini.</div>
+
       <div class="passage-note">（注）<ruby>生<rt>い</rt></ruby>ける：<ruby>花<rt>はな</rt></ruby>びんなどに<ruby>花<rt>はな</rt></ruby>を<ruby>飾<rt>かざ</rt></ruby>ること</div>
     </div>
 
@@ -657,6 +662,12 @@
     const all = document.querySelectorAll('.ans-box');
     const anyHidden = Array.from(all).some(el => !el.classList.contains('open'));
     all.forEach(el => anyHidden ? el.classList.add('open') : el.classList.remove('open'));
+  }
+  function toggleAllPassageSent() {
+    const ids = ['sent-p1','sent-p2','sent-p3','sent-p4','sent-p5','sent-p6'];
+    const elements = ids.map(id => document.getElementById(id)).filter(Boolean);
+    const anyHidden = elements.some(el => el.style.display !== 'block');
+    elements.forEach(el => el.style.display = anyHidden ? 'block' : 'none');
   }
 </script>
 </body>
