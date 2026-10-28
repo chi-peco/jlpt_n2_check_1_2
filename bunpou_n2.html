@@ -1,0 +1,1483 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>N2 文法 模擬テスト</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+:root {
+  --bg: #f5f7fa;
+  --surface: #ffffff;
+  --surface2: #f0f4f8;
+  --border: #d0d8e4;
+  --text: #1a2535;
+  --text-light: #5a6a7e;
+  --accent: #3a6b8a;
+  --accent-light: #e8f0f6;
+  --tag-bg: #e8f0f6;
+  --tag-text: #3a6b8a;
+  --btn: #3a6b8a;
+  --btn-text: #ffffff;
+  --ruby-color: #c0392b;
+  --correct-border: #27ae60;
+  --wrong-label: #e74c3c;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1923;
+    --surface: #1a2535;
+    --surface2: #243040;
+    --border: #2e4055;
+    --text: #e8edf3;
+    --text-light: #8a9db0;
+    --accent: #5b9ec9;
+    --accent-light: #1a2d3e;
+    --tag-bg: #1a2d3e;
+    --tag-text: #5b9ec9;
+    --btn: #5b9ec9;
+    --btn-text: #0f1923;
+    --ruby-color: #e74c3c;
+    --correct-border: #2ecc71;
+    --wrong-label: #e74c3c;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1923;
+  --surface: #1a2535;
+  --surface2: #243040;
+  --border: #2e4055;
+  --text: #e8edf3;
+  --text-light: #8a9db0;
+  --accent: #5b9ec9;
+  --accent-light: #1a2d3e;
+  --tag-bg: #1a2d3e;
+  --tag-text: #5b9ec9;
+  --btn: #5b9ec9;
+  --btn-text: #0f1923;
+  --ruby-color: #e74c3c;
+  --correct-border: #2ecc71;
+  --wrong-label: #e74c3c;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', 'BIZ UDPGothic', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.7;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0;
+}
+
+/* Header */
+.site-header {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 100;
+  background: var(--accent);
+  color: #fff;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.site-header .tag {
+  background: rgba(255,255,255,0.2);
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .05em;
+}
+.site-header h1 { font-size: 16px; font-weight: 700; }
+
+/* Nav */
+.site-nav {
+  position: sticky;
+  top: calc(env(safe-area-inset-top, 0px) + 42px);
+  z-index: 99;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+}
+.site-nav a {
+  display: block;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-light);
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+  transition: color .15s, border-color .15s;
+}
+.site-nav a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* Main */
+.main-wrap { max-width: 800px; margin: 0 auto; padding: 24px 0 60px; }
+
+/* Section */
+.section { margin-bottom: 40px; }
+.section-header {
+  background: var(--accent);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 8px 8px 0 0;
+  font-size: 15px;
+  font-weight: 700;
+}
+.section-body {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  padding: 20px 16px;
+}
+
+/* Instruction */
+.instruction-box {
+  border-left: 4px solid var(--accent);
+  background: var(--accent-light);
+  padding: 10px 14px;
+  border-radius: 0 6px 6px 0;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+.instruction-box .inst-ja { font-weight: 600; }
+.instruction-box .inst-id { color: var(--text-light); font-size: 13px; margin-top: 2px; }
+
+/* Mondai block */
+.mondai-block {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+.mondai-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.mondai-num {
+  background: var(--accent);
+  color: #fff;
+  border-radius: 50%;
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700;
+  flex-shrink: 0; margin-top: 2px;
+}
+.line-wrap { flex: 1; min-width: 0; }
+.mondai-line { font-size: 15px; font-weight: 600; line-height: 1.6; }
+.mondai-trans {
+  font-size: 13px;
+  color: var(--text-light);
+  margin-top: 3px;
+  display: none;
+}
+.mondai-trans.show { display: block; }
+.btn-group { display: flex; gap: 6px; flex-shrink: 0; margin-top: 2px; }
+.btn-r, .btn-s, .btn-a {
+  border: none; border-radius: 4px; cursor: pointer;
+  font-size: 12px; font-weight: 700;
+  padding: 4px 8px;
+  transition: opacity .15s;
+}
+.btn-r { background: var(--tag-bg); color: var(--tag-text); }
+.btn-s { background: var(--tag-bg); color: var(--tag-text); }
+.btn-a { background: var(--btn); color: var(--btn-text); }
+.btn-r:hover, .btn-s:hover, .btn-a:hover { opacity: .8; }
+
+/* Ruby */
+ruby rt { display: none; font-size: 10px; color: var(--ruby-color); }
+ruby.show rt { display: block; }
+
+/* Mondai body */
+.mondai-body { padding: 14px 16px; }
+
+/* Choices */
+.choices {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 10px;
+}
+@media (max-width: 480px) { .choices { grid-template-columns: 1fr; } }
+.choice-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 14px;
+}
+.choice-num {
+  background: var(--accent-light);
+  color: var(--accent);
+  border-radius: 4px;
+  width: 22px; height: 22px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* Blank */
+.blank {
+  display: inline-block;
+  border-bottom: 2px solid var(--text);
+  min-width: 60px;
+  text-align: center;
+  padding: 0 4px;
+}
+.star-blank {
+  display: inline-block;
+  border-bottom: 2px solid var(--accent);
+  color: var(--accent);
+  font-weight: 700;
+  min-width: 30px;
+  text-align: center;
+  padding: 0 4px;
+}
+
+/* Box num (passage) */
+.box-num {
+  display: inline-block;
+  border: 1px solid var(--text);
+  border-radius: 3px;
+  padding: 0 5px;
+  font-size: 13px;
+  font-weight: 700;
+  margin: 0 1px;
+  min-width: 30px;
+  text-align: center;
+}
+
+/* Passage box */
+.passage-box {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 18px 20px;
+  margin-bottom: 16px;
+  font-size: 15px;
+  line-height: 2;
+}
+.passage-title {
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 14px;
+  color: var(--accent);
+}
+
+/* Answer box */
+.ans-box {
+  display: none;
+  margin-top: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.ans-box.show { display: block; }
+.ans-box-correct {
+  border-left: 4px solid var(--correct-border);
+  background: var(--surface2);
+  padding: 12px 14px;
+}
+.ans-correct-block {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 6px;
+}
+.ans-correct-num {
+  background: var(--correct-border);
+  color: #fff;
+  border-radius: 50%;
+  width: 26px; height: 26px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700;
+  flex-shrink: 0;
+}
+.ans-correct-desc { font-size: 14px; font-weight: 600; }
+.ans-trans { font-size: 13px; color: var(--text-light); margin-top: 4px; }
+.wrong-list { padding: 12px 14px; display: flex; flex-direction: column; gap: 14px; }
+.wrong-item { font-size: 13px; }
+.wrong-label { color: var(--wrong-label); font-weight: 700; margin-bottom: 4px; }
+.wrong-usage { margin-bottom: 4px; }
+.wrong-example { font-style: italic; color: var(--text-light); margin-bottom: 2px; }
+.wrong-trans { color: var(--text-light); font-size: 12px; }
+
+/* Dialogue box */
+.dialogue-box {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  line-height: 1.8;
+}
+</style>
+
+<header class="site-header">
+  <span class="tag">N2</span>
+  <h1>文法 模擬テスト — Tes Simulasi Tata Bahasa</h1>
+</header>
+
+<nav class="site-nav">
+  <a href="#mondai7">問題7</a>
+  <a href="#mondai8">問題8</a>
+  <a href="#mondai9">問題9</a>
+</nav>
+
+<div class="main-wrap">
+
+<!-- ===================== 問題7 ===================== -->
+<section class="section" id="mondai7">
+  <div class="section-header">問題7　文の文法①（文法形式の判断）</div>
+  <div class="section-body">
+    <div class="instruction-box">
+      <div class="inst-ja">（　）に入れるのに最もよいものを、１・２・３・４から一つ選びなさい。</div>
+      <div class="inst-id">Pilih satu jawaban terbaik dari 1・2・3・4 untuk mengisi (　).</div>
+    </div>
+
+    <!-- 問31 -->
+    <div class="mondai-block">
+      <div class="mondai-header">
+        <div class="mondai-num">31</div>
+        <div class="line-wrap">
+          <div class="mondai-line">この町は観光地として有名で、夏になると海水浴客（　）になる。</div>
+          <div class="mondai-trans" id="st31">Kota ini terkenal sebagai tempat wisata, dan saat musim panas menjadi (　) pengunjung pantai.</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn-r" onclick="toggleRuby(this)">ル</button>
+          <button class="btn-s" onclick="toggleSent('st31', this)">文</button>
+          <button class="btn-a" onclick="toggleAns('ans31', this)">A</button>
+        </div>
+      </div>
+      <div class="mondai-body">
+        <div class="choices">
+          <div class="choice-item"><span class="choice-num">1</span>ばかり</div>
+          <div class="choice-item"><span class="choice-num">2</span>がち</div>
+          <div class="choice-item"><span class="choice-num">3</span>だらけ</div>
+          <div class="choice-item"><span class="choice-num">4</span>っぽい</div>
+        </div>
+        <div class="ans-box" id="ans31">
+          <div class="ans-box-correct">
+            <div class="ans-correct-block">
+              <div class="ans-correct-num">3</div>
+              <div class="ans-correct-desc">だらけ ― penuh dengan ~, dipenuhi ~</div>
+            </div>
+            <div class="ans-trans">「海水浴客だらけ」= dipenuhi pengunjung pantai. Menunjukkan bahwa sesuatu dipenuhi oleh hal tersebut (seringkali berkesan banyak/berantakan).</div>
+          </div>
+          <div class="wrong-list">
+            <div class="wrong-item">
+              <div class="wrong-label">① ばかり</div>
+              <div class="wrong-usage">～ばかり：hanya ~, terus-menerus ~</div>
+              <div class="wrong-example">ゲームばかりしている。</div>
+              <div class="wrong-trans">Terus-terusan main game saja.</div>
+            </div>
+            <div class="wrong-item">
+              <div class="wrong-label">② がち</div>
+              <div class="wrong-usage">～がち：cenderung ~, mudah menjadi ~（bersifat negatif）</div>
+              <div class="wrong-example">彼女は病気がちだ。</div>
+              <div class="wrong-trans">Dia cenderung sering sakit.</div>
+            </div>
+            <div class="wrong-item">
+              <div class="wrong-label">④ っぽい</div>
+              <div class="wrong-usage">～っぽい：terkesan seperti ~, mudah ~</div>
+              <div class="wrong-example">子供っぽい話し方だ。</div>
+              <div class="wrong-trans">Cara bicaranya kekanak-kanakan.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 問32 -->
+    <div class="mondai-block">
+      <div class="mondai-header">
+        <div class="mondai-num">32</div>
+        <div class="line-wrap">
+          <div class="mondai-line">この仕事を引き受けた（　）、最後まで責任を持ってやり遂げるつもりだ。</div>
+          <div class="mondai-trans" id="st32">Karena sudah menerima pekerjaan ini (　), saya berniat menyelesaikannya dengan penuh tanggung jawab hingga akhir.</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn-r" onclick="toggleRuby(this)">ル</button>
+          <button class="btn-s" onclick="toggleSent('st32', this)">文</button>
+          <button class="btn-a" onclick="toggleAns('ans32', this)">A</button>
+        </div>
+      </div>
+      <div class="mondai-body">
+        <div class="choices">
+          <div class="choice-item"><span class="choice-num">1</span>ものなら</div>
+          <div class="choice-item"><span class="choice-num">2</span>からには</div>
+          <div class="choice-item"><span class="choice-num">3</span>としたら</div>
+          <div class="choice-item"><span class="choice-num">4</span>ことだし</div>
+        </div>
+        <div class="ans-box" id="ans32">
+          <div class="ans-box-correct">
+            <div class="ans-correct-block">
+              <div class="ans-correct-num">2</div>
+              <div class="ans-correct-desc">からには ― karena sudah ~, jika sudah begitu maka</div>
+            </div>
+            <div class="ans-trans">「引き受けたからには」= karena sudah menerima, maka... Menyatakan tekad/kewajiban berdasarkan situasi yang sudah terjadi.</div>
+          </div>
+          <div class="wrong-list">
+            <div class="wrong-item">
+              <div class="wrong-label">① ものなら</div>
+              <div class="wrong-usage">～ものなら：kalau bisa ~ (menyatakan harapan yang sulit terwujud)</div>
+              <div class="wrong-example">できるものなら、やってみたい。</div>
+              <div class="wrong-trans">Kalau bisa, ingin mencobanya.</div>
+            </div>
+            <div class="wrong-item">
+              <div class="wrong-label">③ としたら</div>
+              <div class="wrong-usage">～としたら：jika seandainya ~ (hipotesis)</div>
+              <div class="wrong-example">宝くじが当たったとしたら、何を買う？</div>
+              <div class="wrong-trans">Jika menang lotre, mau beli apa?</div>
+            </div>
+            <div class="wrong-item">
+              <div class="wrong-label">④ ことだし</div>
+              <div class="wrong-usage">～ことだし：mengingat hal ~, karena ada hal ~ (alasan ringan)</div>
+              <div class="wrong-example">せっかく来たことだし、もう少し楽しもう。</div>
+              <div class="wrong-trans">Karena sudah susah payah datang, mari menikmati sedikit lagi.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 問33 -->
+    <div class="mondai-block">
+      <div class="mondai-header">
+        <div class="mondai-num">33</div>
+        <div class="line-wrap">
+          <div class="mondai-line">新しい制度の導入（　）、説明会を開いた。</div>
+          <div class="mondai-trans" id="st33">Sebelum penerapan sistem baru (　), diadakan sesi penjelasan.</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn-r" onclick="toggleRuby(this)">ル</button>
+          <button class="btn-s" onclick="toggleSent('st33', this)">文</button>
+          <button class="btn-a" onclick="toggleAns('ans33', this)">A</button>
+        </div>
+      </div>
+      <div class="mondai-body">
+        <div class="choices">
+          <div class="choice-item"><span class="choice-num">1</span>に加えて</div>
+          <div class="choice-item"><span class="choice-num">2</span>に比べて</div>
+          <div class="choice-item"><span class="choice-num">3</span>に先立って</div>
+          <div class="choice-item"><span class="choice-num">4</span>にとって</div>
+        </div>
+        <div class="ans-box" id="ans33">
+          <div class="ans-box-correct">
+            <div class="ans-correct-block">
+              <div class="ans-correct-num">3</div>
+              <div class="ans-correct-desc">に先立って ― sebelum ~, mendahului ~</div>
+            </div>
+            <div class="ans-trans">「導入に先立って」= sebelum penerapan. Menyatakan suatu tindakan dilakukan lebih dahulu sebelum hal utama.</div>
+          </div>
+          <div class="wrong-list">
+            <div class="wrong-item">
+              <div class="wrong-label">① に加えて</div>
+              <div class="wrong-usage">～に加えて：selain ~ juga, ditambah dengan ~</div>
+              <div class="wrong-example">英語に加えて、中国語も話せる。</div>
+              <div class="wrong-trans">Selain bahasa Inggris, juga bisa berbahasa Mandarin.</div>
+            </div>
+            <div class="wrong-item">
+              <div class="wrong-label">② に比べて</div>
+              <div class="wrong-usage">～に比べて：dibandingkan dengan ~</div>
+              <div class="wrong-example">去年に比べて、売り上げが増えた。</div>
+              <div class="wrong-trans">Dibandingkan tahun lalu, penjualan meningkat.</div>
+            </div>
+            <div class="wrong-item">
+              <div class="wrong-label">④ にとって</div>
+              <div class="wrong-usage">～にとって：bagi ~, dari sudut pandang ~</div>
+              <div class="wrong-example">私にとって、大切な思い出だ。</div>
+              <div class="wrong-trans">Bagi saya, itu adalah kenangan berharga.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 問34 -->
+    <div class="mondai-block">
+      <div class="mondai-header">
+        <div class="mondai-num">34</div>
+        <div class="line-wrap">
+          <div class="mondai-line">賛成（　）反対（　）、まず意見を言ってみてください。</div>
+          <div class="mondai-trans" id="st34">Setuju (　) tidak setuju (　), silakan coba sampaikan pendapat Anda terlebih dahulu.</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn-r" onclick="toggleRuby(this)">ル</button>
+          <button class="btn-s" onclick="toggleSent('st34', this)">文</button>
+          <button class="btn-a" onclick="toggleAns('ans34', this)">A</button>
+        </div>
+      </div>
+      <div class="mondai-body">
+        <div class="choices">
+          <div class="choice-item"><span class="choice-num">1</span>であれ / であれ</div>
+          <div class="choice-item"><span class="choice-num">2</span>にしても / にしても</div>
+          <div class="choice-item"><span class="choice-num">3</span>にしろ / にしろ</div>
+          <div class="choice-item"><span class="choice-num">4</span>だろうと / だろうと</div>
+        </div>
+        <div class="ans-box" id="ans34">
+          <div class="ans-box-correct">
+            <div class="ans-correct-block">
+              <div class="ans-correct-num">3</div>
+              <div class="ans-correct-desc">にしろ／にしろ ― apakah ~ atau ~, bagaimanapun</div>
+            </div>
+            <div class="ans-trans">「賛成にしろ反対にしろ」= apakah setuju maupun tidak setuju. Menyatakan "dalam kondisi apapun, kesimpulannya sama".</div>
+          </div>
+          <div class="wrong-list">
+            <div class="wrong-item">
+              <div class="wrong-label">① であれ / であれ</div>
+              <div class="wrong-usage">～であれ～であれ：baik ~ maupun ~ (lebih formal, ekspresi tertulis)</div>
+              <div class="wrong-example">男性であれ女性であれ、平等に扱う。</div>
+              <div class="wrong-trans">Baik pria maupun wanita, diperlakukan setara.</div>
+            </div>
+            <div class="wrong-item">
+              <div class="wrong-label">② にしても / にしても</div>
+              <div class="wrong-usage">～にしても～にしても：bahkan jika ~ (meskipun kondisi berbeda)</div>
+              <div class="wrong-example">行くにしても行かないにしても、連絡してください。</div>
+              <div class="wrong-trans">Mau pergi atau tidak, tolong hubungi saya.</div>
+            </div>
+            <div class="wrong-item">
+              <div class="wrong-label">④ だろうと / だろうと</div>
+              <div class="wrong-usage">～だろうと～だろうと：apapun yang terjadi (lebih kuat, menekankan ketidakpedulian terhadap kondisi)</div>
+              <div class="wrong-example">雨だろうと風だろうと、必ず行く。</div>
+              <div class="wrong-trans">Hujan atau angin sekalipun, pasti pergi.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 問35 -->
+    <div class="mondai-block">
+      <div class="mondai-header">
+        <div class="mondai-num">35</div>
+        <div class="line-wrap">
+          <div class="mondai-line">「毎日続けることが大切だよ。」「そうですね。（　）続けていきます。」</div>
+          <div class="mondai-trans" id="st35">"Yang penting adalah melakukannya setiap hari." "Betul. Saya akan terus melakukannya (　)."</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn-r" onclick="toggleRuby(this)">ル</button>
+          <button class="btn-s" onclick="toggleSent('st35', this)">文</button>
+          <button class="btn-a" onclick="toggleAns('ans35', this)">A</button>
+        </div>
+      </div>
+      <div class="mondai-body">
+        <div class="choices">
+          <div class="choice-item"><span class="choice-num">1</span>こうして</div>
+          <div class="choice-item"><span class="choice-num">2</span>あのように</div>
+          <div class="choice-item"><span class="choice-num">3</span>そうやって</div>
+          <div class="choice-item"><span class="choice-num">4</span>このように</div>
+        </div>
+        <div class="ans-box" id="ans35">
+          <div class="ans-box-correct">
+            <div class="ans-correct-block">
+              <div class="ans-correct-num">3</div>
+              <div class="ans-correct-desc">そうやって ― dengan cara seperti itu, begitulah</div>
+            </div>
+            <div class="ans-trans">「そうやって」mengacu pada cara yang baru disebutkan lawan bicara (melanjutkan setiap hari). Merespons pernyataan orang lain.</div>
+          </div>
+          <div class="wrong-list">
+            <div class="wrong-item">
+              <div class="wrong-label">① こうして</div>
+              <div class="wrong-usage">こうして：dengan cara ini (mengacu pada cara pembicara sendiri atau situasi saat ini)</div>
+              <div class="wrong-example">こうして毎日練習した結果、上手くなった。</div>
+              <div class="wrong-trans">Berkat berlatih seperti ini setiap hari, menjadi mahir.</div>
+            </div>
+            <div class="wrong-item">
+              <div class="wrong-label">② あのように</div>
+              <div class="wrong-usage">あのように：seperti itu (mengacu pada hal yang jauh dari kedua pihak)</div>
+              <div class="wrong-example">あのように上手に話せたらいいな。</div>
+              <div class="wrong-trans">Andai bisa berbicara sefasih itu.</div>
+            </div>
+            <div class="wrong-item">
+              <div class="wrong-label">④ このように</div>
+              <div class="wrong-usage">このように：seperti ini (mengacu pada cara pembicara/situasi dekat)</div>
+              <div class="wrong-example">このように記入してください。</div>
+              <div class="wrong-trans">Mohon diisi seperti ini.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 問36 -->
+    <div class="mondai-block">
+      <div class="mondai-header">
+        <div class="mondai-num">36</div>
+        <div class="line-wrap">
+          <div class="mondai-line">これほど便利な道具は、以前は（　）なかった。</div>
+          <div class="mondai-trans" id="st36">Alat sepraktis ini, dulu memang tidak (　) ada.</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn-r" onclick="toggleRuby(this)">ル</button>
+          <button class="btn-s" onclick="toggleSent('st36', this)">文</button>
+          <button class="btn-a" onclick="toggleAns('ans36', this)">A</button>
+        </div>
+      </div>
+      <div class="mondai-body">
+        <div class="choices">
+          <div class="choice-item"><span class="choice-num">1</span>あり得る</div>
+          <div class="choice-item"><span class="choice-num">2</span>あり得</div>
+          <div class="choice-item"><span class="choice-num">3</span>ありえ</div>
+          <div class="choice-item"><span class="choice-num">4</span>あり得た</div>
+        </div>
+        <div class="ans-box" id="ans36">
+          <div class="ans-box-correct">
+            <div class="ans-correct-block">
+              <div class="ans-correct-num">2</div>
+              <div class="ans-correct-desc">あり得（ありえ）＋なかった ― tidak mungkin ada</div>
+            </div>
+            <div class="ans-trans">「あり得なかった」= tidak mungkin ada (di masa lalu). 「あり得」adalah bentuk te-renyah yang disambung dengan「なかった」. 「あり得る」sendiri berarti "mungkin ada/terjadi".</div>
+          </div>
+          <div class="wrong-list">
+            <div class="wrong-item">
+              <div class="wrong-label">① あり得る</div>
+              <div class="wrong-usage">あり得る：mungkin terjadi/ada (berdiri sendiri sebagai predikat)</div>
+              <div class="wrong-example">そんなことはあり得る。</div>
+              <div class="wrong-trans">Hal seperti itu mungkin saja terjadi.</div>
+            </div>
+            <div class="wrong-item">
+              <div class="wrong-label">③ ありえ (hiragana)</div>
+              <div class="wrong-usage">Penulisan ありえ dalam hiragana saja tidak umum; penulisan yang tepat adalah あり得</div>
+            </div>
+            <div class="wrong-item">
+              <div class="wrong-label">④ あり得た</div>
+              <div class="wrong-usage">あり得た：memang ada/terjadi (bentuk lampau positif) — artinya berlawanan</div>
+              <div class="wrong-example">昔はそういうことがあり得た。</div>
+              <div class="wrong-trans">Dulu hal seperti itu memang bisa terjadi.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 問37 -->
+    <div class="mondai-block">
+      <div class="mondai-header">
+        <div class="mondai-num">37</div>
+        <div class="line-wrap">
+          <div class="mondai-line">食事の前に手を（　）。</div>
+          <div class="mondai-trans" id="st37">Sebelum makan, (　) mencuci tangan.</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn-r" onclick="toggleRuby(this)">ル</button>
+          <button class="btn-s" onclick="toggleSent('st37', this)">文</button>
+          <button class="btn-a" onclick="toggleAns('ans37', this)">A</button>
+        </div>
+      </div>
+      <div class="mondai-body">
+        <div class="choices">
+          <div class="choice-item"><span class="choice-num">1</span>洗うようにすること</div>
+          <div class="choice-item"><span class="choice-num">2</span>洗ったらいいこと</div>
+          <div class="choice-item"><span class="choice-num">3</span>洗うことができること</div>
+          <div class="choice-item"><span class="choice-num">4</span>洗えばよかったこと</div>
+        </div>
+        <div class="ans-box" id="ans37">
+          <div class="ans-box-correct">
+            <div class="ans-correct-block">
+              <div class="ans-correct-num">1</div>
+              <div class="ans-correct-desc">洗うようにすること ― usahakan untuk mencuci</div>
+            </div>
+            <div class="ans-trans">「～ようにすること」= usahakanlah untuk ~. Menyatakan instruksi atau aturan yang harus diupayakan. Digunakan dalam konteks anjuran atau peraturan.</div>
+          </div>
+          <div class="wrong-list">
+            <div class="wrong-item">
+              <div class="wrong-label">② 洗ったらいいこと</div>
+              <div class="wrong-usage">「～たらいい」= lebih baik ~, sebaiknya ~ (saran, bukan aturan tegas)</div>
+              <div class="wrong-example">早く寝たらいい。</div>
+              <div class="wrong-trans">Sebaiknya tidur lebih awal.</div>
+            </div>
+            <div class="wrong-item">
+              <div class="wrong-label">③ 洗うことができること</div>
+              <div class="wrong-usage">「～ことができる」= bisa ~, mampu ~ (kemampuan, bukan anjuran)</div>
+            </div>
+            <div class="wrong-item">
+              <div class="wrong-label">④ 洗えばよかったこと</div>
+              <div class="wrong-usage">「～ばよかった」= seharusnya ~ (penyesalan di masa lalu)</div>
+              <div class="wrong-example">もっと早く洗えばよかった。</div>
+              <div class="wrong-trans">Seharusnya mencuci lebih awal.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 問38 -->
+    <div class="mondai-block">
+      <div class="mondai-header">
+        <div class="mondai-num">38</div>
+        <div class="line-wrap">
+          <div class="mondai-line">もし私が社長（　）、まず給料を上げると思います。</div>
+          <div class="mondai-trans" id="st38">Jika saya menjadi direktur (　), pertama-tama saya pikir saya akan menaikkan gaji.</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn-r" onclick="toggleRuby(this)">ル</button>
+          <button class="btn-s" onclick="toggleSent('st38', this)">文</button>
+          <button class="btn-a" onclick="toggleAns('ans38', this)">A</button>
+        </div>
+      </div>
+      <div class="mondai-body">
+        <div class="choices">
+          <div class="choice-item"><span class="choice-num">1</span>であれば</div>
+          <div class="choice-item"><span class="choice-num">2</span>だったら</div>
+          <div class="choice-item"><span class="choice-num">3</span>ならば</div>
+          <div class="choice-item"><span class="choice-num">4</span>としたら</div>
+        </div>
+        <div class="ans-box" id="ans38">
+          <div class="ans-box-correct">
+            <div class="ans-correct-block">
+              <div class="ans-correct-num">4</div>
+              <div class="ans-correct-desc">としたら ― jika seandainya ~ (hipotesis yang belum terjadi)</div>
+            </div>
+            <div class="ans-trans">「社長としたら」= seandainya menjadi direktur. 「もし」＋「としたら」adalah kombinasi hipotesis yang natural untuk situasi yang belum/tidak nyata.</div>
+          </div>
+          <div class="wrong-list">
+            <div class="wrong-item">
+              <div class="wrong-label">① であれば</div>
+              <div class="wrong-usage">～であれば：jika memang ~ (kondisi yang mungkin nyata)</div>
+              <div class="wrong-example">問題がなければ、進めましょう。</div>
+              <div class="wrong-trans">Jika tidak ada masalah, mari lanjutkan.</div>
+            </div>
+            <div class="wrong-item">
+              <div class="wrong-label">② だったら</div>
+              <div class="wrong-usage">～だったら：kalau ~, jika ~ (lebih kasual, digunakan dalam percakapan)</div>
+              <div class="wrong-example">雨だったら、行かない。</div>
+              <div class="wrong-trans">Kalau hujan, tidak jadi pergi.</div>
+            </div>
+            <div class="wrong-item">
+              <div class="wrong-label">③ ならば</div>
+              <div class="wrong-usage">～ならば：kalau ~, jika memang begitu (kondisi berdasarkan info yang ada)</div>
+              <div class="wrong-example">行くならば、早めに出発してください。</div>
+              <div class="wrong-trans">Jika memang pergi, berangkatlah lebih awal.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 問39 -->
+    <div class="mondai-block">
+      <div class="mondai-header">
+        <div class="mondai-num">39</div>
+        <div class="line-wrap">
+          <div class="mondai-line">雨の中を（　）、本当によく来てくれたね。</div>
+          <div class="mondai-trans" id="st39">Di tengah hujan (　) dia datang, sungguh baik sekali dia mau datang.</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn-r" onclick="toggleRuby(this)">ル</button>
+          <button class="btn-s" onclick="toggleSent('st39', this)">文</button>
+          <button class="btn-a" onclick="toggleAns('ans39', this)">A</button>
+        </div>
+      </div>
+      <div class="mondai-body">
+        <div class="choices">
+          <div class="choice-item"><span class="choice-num">1</span>来ようとする彼ほど</div>
+          <div class="choice-item"><span class="choice-num">2</span>来ようとする彼ほど</div>
+          <div class="choice-item"><span class="choice-num">3</span>来ようとしている彼は</div>
+          <div class="choice-item"><span class="choice-num">4</span>来ようとした彼でも</div>
+        </div>
+        <div class="ans-box" id="ans39">
+          <div class="ans-box-correct">
+            <div class="ans-correct-block">
+              <div class="ans-correct-num">2</div>
+              <div class="ans-correct-desc">来ようとする彼ほど ― dia yang berusaha datang (konstruksi yang tepat)</div>
+            </div>
+            <div class="ans-trans">「来ようとする彼」= dia yang berusaha/bermaksud datang. 「ほど」di sini menunjukkan tingkat kebaikan yang dilakukan. Konteks: memuji usaha datang di tengah hujan.</div>
+          </div>
+          <div class="wrong-list">
+            <div class="wrong-item">
+              <div class="wrong-label">③ 来ようとしている彼は</div>
+              <div class="wrong-usage">「～ようとしている」= sedang dalam proses hendak ~ (aksi yang masih berlangsung)</div>
+            </div>
+            <div class="wrong-item">
+              <div class="wrong-label">④ 来ようとした彼でも</div>
+              <div class="wrong-usage">「～でも」= bahkan ~ (partikel yang mengubah nuansa menjadi "bahkan dia pun")</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 問40 -->
+    <div class="mondai-block">
+      <div class="mondai-header">
+        <div class="mondai-num">40</div>
+        <div class="line-wrap">
+          <div class="mondai-line">「部屋が散らかっているね。」「そうだね、今日中に（　）。」</div>
+          <div class="mondai-trans" id="st40">"Kamarnya berantakan ya." "Iya, hari ini harus (　)."</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn-r" onclick="toggleRuby(this)">ル</button>
+          <button class="btn-s" onclick="toggleSent('st40', this)">文</button>
+          <button class="btn-a" onclick="toggleAns('ans40', this)">A</button>
+        </div>
+      </div>
+      <div class="mondai-body">
+        <div class="choices">
+          <div class="choice-item"><span class="choice-num">1</span>片付けなければならない</div>
+          <div class="choice-item"><span class="choice-num">2</span>片付けるべきではない</div>
+          <div class="choice-item"><span class="choice-num">3</span>片付けなくてもいい</div>
+          <div class="choice-item"><span class="choice-num">4</span>片付けちゃおう</div>
+        </div>
+        <div class="ans-box" id="ans40">
+          <div class="ans-box-correct">
+            <div class="ans-correct-block">
+              <div class="ans-correct-num">4</div>
+              <div class="ans-correct-desc">片付けちゃおう ― mari selesaikan (membereskan) saja</div>
+            </div>
+            <div class="ans-trans">「片付けちゃおう」=「片付けてしまおう」(bentuk percakapan). Menyatakan niat untuk menyelesaikan sesuatu sepenuhnya. Konteks percakapan kasual sangat cocok.</div>
+          </div>
+          <div class="wrong-list">
+            <div class="wrong-item">
+              <div class="wrong-label">① 片付けなければならない</div>
+              <div class="wrong-usage">～なければならない：harus ~ (kewajiban, agak formal/kaku)</div>
+            </div>
+            <div class="wrong-item">
+              <div class="wrong-label">② 片付けるべきではない</div>
+              <div class="wrong-usage">～べきではない：seharusnya tidak ~ (larangan berdasarkan pertimbangan)</div>
+            </div>
+            <div class="wrong-item">
+              <div class="wrong-label">③ 片付けなくてもいい</div>
+              <div class="wrong-usage">～なくてもいい：tidak perlu ~ (izin untuk tidak melakukan)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 問41 -->
+    <div class="mondai-block">
+      <div class="mondai-header">
+        <div class="mondai-num">41</div>
+        <div class="line-wrap">
+          <div class="mondai-line">田中さんが山田さんに本を（　）。</div>
+          <div class="mondai-trans" id="st41">Katanya Tanaka-san telah (　) buku kepada Yamada-san.</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn-r" onclick="toggleRuby(this)">ル</button>
+          <button class="btn-s" onclick="toggleSent('st41', this)">文</button>
+          <button class="btn-a" onclick="toggleAns('ans41', this)">A</button>
+        </div>
+      </div>
+      <div class="mondai-body">
+        <div class="choices">
+          <div class="choice-item"><span class="choice-num">1</span>あげたそうですね</div>
+          <div class="choice-item"><span class="choice-num">2</span>くれたそうですね</div>
+          <div class="choice-item"><span class="choice-num">3</span>もらったそうですね</div>
+          <div class="choice-item"><span class="choice-num">4</span>いただいたそうですね</div>
+        </div>
+        <div class="ans-box" id="ans41">
+          <div class="ans-box-correct">
+            <div class="ans-correct-block">
+              <div class="ans-correct-num">1</div>
+              <div class="ans-correct-desc">あげたそうですね ― katanya memberikan (dari Tanaka ke Yamada)</div>
+            </div>
+            <div class="ans-trans">「田中さんが山田さんに本をあげた」= Tanaka memberikan buku kepada Yamada. 「あげる」= memberi (dari sudut pandang pemberi). 「そうですね」= katanya begitu ya.</div>
+          </div>
+          <div class="wrong-list">
+            <div class="wrong-item">
+              <div class="wrong-label">② くれたそうですね</div>
+              <div class="wrong-usage">くれる：memberikan (kepada saya/pihak saya). Subjek seharusnya orang lain yang memberi kepada pihak pembicara.</div>
+              <div class="wrong-example">田中さんが私に本をくれた。</div>
+              <div class="wrong-trans">Tanaka memberikan buku kepada saya.</div>
+            </div>
+            <div class="wrong-item">
+              <div class="wrong-label">③ もらったそうですね</div>
+              <div class="wrong-usage">もらう：menerima (subjek adalah penerima)</div>
+              <div class="wrong-example">山田さんが田中さんに本をもらった。</div>
+              <div class="wrong-trans">Yamada menerima buku dari Tanaka.</div>
+            </div>
+            <div class="wrong-item">
+              <div class="wrong-label">④ いただいたそうですね</div>
+              <div class="wrong-usage">いただく：menerima (versi sopan dari もらう; subjek adalah penerima dengan hormat)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 問42 -->
+    <div class="mondai-block">
+      <div class="mondai-header">
+        <div class="mondai-num">42</div>
+        <div class="line-wrap">
+          <div class="mondai-line">もっと早く相談していれば、こんな大きな問題に（　）。</div>
+          <div class="mondai-trans" id="st42">Kalau sudah berkonsultasi lebih awal, tidak akan menjadi masalah sebesar (　).</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn-r" onclick="toggleRuby(this)">ル</button>
+          <button class="btn-s" onclick="toggleSent('st42', this)">文</button>
+          <button class="btn-a" onclick="toggleAns('ans42', this)">A</button>
+        </div>
+      </div>
+      <div class="mondai-body">
+        <div class="choices">
+          <div class="choice-item"><span class="choice-num">1</span>なることはあった</div>
+          <div class="choice-item"><span class="choice-num">2</span>なることになった</div>
+          <div class="choice-item"><span class="choice-num">3</span>なることはある</div>
+          <div class="choice-item"><span class="choice-num">4</span>なることはなかった</div>
+        </div>
+        <div class="ans-box" id="ans42">
+          <div class="ans-box-correct">
+            <div class="ans-correct-block">
+              <div class="ans-correct-num">4</div>
+              <div class="ans-correct-desc">なることはなかった ― tidak akan menjadi (penyesalan masa lalu)</div>
+            </div>
+            <div class="ans-trans">「～ていれば、～なることはなかった」= Kalau sudah ~, tidak akan menjadi ~. Ini adalah pola penyesalan kondisional (counterfactual): kondisi sudah tidak terpenuhi, dan hasilnya pun sudah terjadi (jadi menyesal).</div>
+          </div>
+          <div class="wrong-list">
+            <div class="wrong-item">
+              <div class="wrong-label">① なることはあった</div>
+              <div class="wrong-usage">「なることはあった」= memang pernah menjadi ~ (mengakui kejadian, bukan penyesalan)</div>
+            </div>
+            <div class="wrong-item">
+              <div class="wrong-label">② なることになった</div>
+              <div class="wrong-usage">「なることになった」= akhirnya (diputuskan) menjadi ~ (hasil dari keputusan/proses)</div>
+            </div>
+            <div class="wrong-item">
+              <div class="wrong-label">③ なることはある</div>
+              <div class="wrong-usage">「なることはある」= memang bisa menjadi ~ (mengakui kemungkinan di masa kini)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.section-body -->
+</section>
+
+<!-- ===================== 問題8 ===================== -->
+<section class="section" id="mondai8">
+  <div class="section-header">問題8　文の文法②（文の組み立て）</div>
+  <div class="section-body">
+    <div class="instruction-box">
+      <div class="inst-ja">次の文の ★ に入る最もよいものを、１・２・３・４から一つ選びなさい。</div>
+      <div class="inst-id">Pilih satu jawaban terbaik dari 1・2・3・4 untuk mengisi ★ pada kalimat berikut.</div>
+    </div>
+
+    <!-- 問43 -->
+    <div class="mondai-block">
+      <div class="mondai-header">
+        <div class="mondai-num">43</div>
+        <div class="line-wrap">
+          <div class="mondai-line">彼女は　<span class="blank">＿＿</span>　<span class="blank">＿＿</span>　<span class="star-blank">★</span>　<span class="blank">＿＿</span>　振る舞っている。</div>
+          <div class="mondai-trans" id="st43">Dia berperilaku (　)(　) ★ (　) seolah-olah tidak tahu.</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn-r" onclick="toggleRuby(this)">ル</button>
+          <button class="btn-s" onclick="toggleSent('st43', this)">文</button>
+          <button class="btn-a" onclick="toggleAns('ans43', this)">A</button>
+        </div>
+      </div>
+      <div class="mondai-body">
+        <div class="choices">
+          <div class="choice-item"><span class="choice-num">1</span>ような</div>
+          <div class="choice-item"><span class="choice-num">2</span>知らない</div>
+          <div class="choice-item"><span class="choice-num">3</span>かのように</div>
+          <div class="choice-item"><span class="choice-num">4</span>何も</div>
+        </div>
+        <div class="ans-box" id="ans43">
+          <div class="ans-box-correct">
+            <div class="ans-correct-block">
+              <div class="ans-correct-num">4</div>
+              <div class="ans-correct-desc">★ = ような（正答：④ 何も ② 知らない ③ かのように ★①ような）→ 順番：何も／知らない／かのように／★ような</div>
+            </div>
+            <div class="ans-trans">完成文：「彼女は何も知らないかのような振る舞っている。」→ 正しくは「何も知らないかのように振る舞っている」= Dia berperilaku seolah-olah tidak tahu apa-apa.<br>★の位置に「ような」が入る。答えは④（3241の順）。</div>
+          </div>
+          <div class="wrong-list">
+            <div class="wrong-item">
+              <div class="wrong-label">文法ポイント</div>
+              <div class="wrong-usage">「～かのように」= seolah-olah ~, seperti ~. 実際はそうではないのに、そのように見える/行動するという意味。</div>
+              <div class="wrong-example">何も知らないかのように振る舞う。</div>
+              <div class="wrong-trans">Berperilaku seolah-olah tidak tahu apa-apa.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 問44 -->
+    <div class="mondai-block">
+      <div class="mondai-header">
+        <div class="mondai-num">44</div>
+        <div class="line-wrap">
+          <div class="mondai-line">この映画は　<span class="blank">＿＿</span>　<span class="blank">＿＿</span>　<span class="star-blank">★</span>　<span class="blank">＿＿</span>　感動した。</div>
+          <div class="mondai-trans" id="st44">Film ini (　)(　) ★ (　) membuat saya sangat terharu.</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn-r" onclick="toggleRuby(this)">ル</button>
+          <button class="btn-s" onclick="toggleSent('st44', this)">文</button>
+          <button class="btn-a" onclick="toggleAns('ans44', this)">A</button>
+        </div>
+      </div>
+      <div class="mondai-body">
+        <div class="choices">
+          <div class="choice-item"><span class="choice-num">1</span>ほど</div>
+          <div class="choice-item"><span class="choice-num">2</span>思った</div>
+          <div class="choice-item"><span class="choice-num">3</span>見るとは</div>
+          <div class="choice-item"><span class="choice-num">4</span>前には</div>
+        </div>
+        <div class="ans-box" id="ans44">
+          <div class="ans-box-correct">
+            <div class="ans-correct-block">
+              <div class="ans-correct-num">3</div>
+              <div class="ans-correct-desc">★ = 思った（正答順：④前には ③見るとは ★②思った ①ほど）</div>
+            </div>
+            <div class="ans-trans">完成文：「この映画は前には見るとは思ったほど感動した。」→ 正しくは「見るとは思わなかったほど感動した」= Saya terharu melebihi bayangan sebelumnya.<br>★の位置に「思った」が入る。答えは③（4312の順）。</div>
+          </div>
+          <div class="wrong-list">
+            <div class="wrong-item">
+              <div class="wrong-label">文法ポイント</div>
+              <div class="wrong-usage">「～とは思わなかったほど」= melebihi yang saya bayangkan sebelumnya. 「ほど」は程度を示す。</div>
+              <div class="wrong-example">こんなに難しいとは思わなかったほど、苦労した。</div>
+              <div class="wrong-trans">Saya berjuang keras melebihi yang saya bayangkan sebelumnya.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 問45 -->
+    <div class="mondai-block">
+      <div class="mondai-header">
+        <div class="mondai-num">45</div>
+        <div class="line-wrap">
+          <div class="mondai-line">健康の　<span class="blank">＿＿</span>　<span class="blank">＿＿</span>　<span class="star-blank">★</span>　<span class="blank">＿＿</span>　している。</div>
+          <div class="mondai-trans" id="st45">Demi kesehatan, (　)(　) ★ (　) sedang dilakukan.</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn-r" onclick="toggleRuby(this)">ル</button>
+          <button class="btn-s" onclick="toggleSent('st45', this)">文</button>
+          <button class="btn-a" onclick="toggleAns('ans45', this)">A</button>
+        </div>
+      </div>
+      <div class="mondai-body">
+        <div class="choices">
+          <div class="choice-item"><span class="choice-num">1</span>毎日</div>
+          <div class="choice-item"><span class="choice-num">2</span>ために</div>
+          <div class="choice-item"><span class="choice-num">3</span>運動を</div>
+          <div class="choice-item"><span class="choice-num">4</span>欠かさず</div>
+        </div>
+        <div class="ans-box" id="ans45">
+          <div class="ans-box-correct">
+            <div class="ans-correct-block">
+              <div class="ans-correct-num">3</div>
+              <div class="ans-correct-desc">★ = 運動を（正答順：③運動を ②ために ①毎日 ★④欠かさず → ③②①④ = 3214）</div>
+            </div>
+            <div class="ans-trans">完成文：「健康の運動をために毎日欠かさずしている。」→ 正しくは「健康のために運動を毎日欠かさずしている」= Demi kesehatan, olahraga dilakukan setiap hari tanpa henti.<br>★の位置に「欠かさず」が入る。答えは③（3214の順）。</div>
+          </div>
+          <div class="wrong-list">
+            <div class="wrong-item">
+              <div class="wrong-label">文法ポイント</div>
+              <div class="wrong-usage">「～を欠かさず」= tanpa pernah melewatkan ~, selalu ~. 「欠かさず」= tanpa absen, tanpa pernah lupa.</div>
+              <div class="wrong-example">薬を毎日欠かさず飲んでいる。</div>
+              <div class="wrong-trans">Minum obat setiap hari tanpa pernah lupa.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 問46 -->
+    <div class="mondai-block">
+      <div class="mondai-header">
+        <div class="mondai-num">46</div>
+        <div class="line-wrap">
+          <div class="mondai-line">このレポートは　<span class="blank">＿＿</span>　<span class="blank">＿＿</span>　<span class="star-blank">★</span>　<span class="blank">＿＿</span>　提出しなければならない。</div>
+          <div class="mondai-trans" id="st46">Laporan ini harus dikumpulkan (　)(　) ★ (　).</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn-r" onclick="toggleRuby(this)">ル</button>
+          <button class="btn-s" onclick="toggleSent('st46', this)">文</button>
+          <button class="btn-a" onclick="toggleAns('ans46', this)">A</button>
+        </div>
+      </div>
+      <div class="mondai-body">
+        <div class="choices">
+          <div class="choice-item"><span class="choice-num">1</span>までに</div>
+          <div class="choice-item"><span class="choice-num">2</span>来週の</div>
+          <div class="choice-item"><span class="choice-num">3</span>必ず</div>
+          <div class="choice-item"><span class="choice-num">4</span>金曜日</div>
+        </div>
+        <div class="ans-box" id="ans46">
+          <div class="ans-box-correct">
+            <div class="ans-correct-block">
+              <div class="ans-correct-num">1</div>
+              <div class="ans-correct-desc">★ = までに（正答順：②来週の ④金曜日 ★①までに ③必ず = 2413）</div>
+            </div>
+            <div class="ans-trans">完成文：「このレポートは来週の金曜日までに必ず提出しなければならない。」= Laporan ini harus dikumpulkan paling lambat Jumat depan tanpa gagal.<br>★の位置に「までに」が入る。答えは①（2413の順）。</div>
+          </div>
+          <div class="wrong-list">
+            <div class="wrong-item">
+              <div class="wrong-label">文法ポイント</div>
+              <div class="wrong-usage">「～までに」= paling lambat ~, sebelum/pada ~. Menunjukkan batas waktu.</div>
+              <div class="wrong-example">5時までに戻ってきてください。</div>
+              <div class="wrong-trans">Tolong kembali paling lambat jam 5.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 問47 -->
+    <div class="mondai-block">
+      <div class="mondai-header">
+        <div class="mondai-num">47</div>
+        <div class="line-wrap">
+          <div class="mondai-line">彼は　<span class="blank">＿＿</span>　<span class="blank">＿＿</span>　<span class="star-blank">★</span>　<span class="blank">＿＿</span>　勉強している。</div>
+          <div class="mondai-trans" id="st47">Dia sedang belajar (　)(　) ★ (　).</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn-r" onclick="toggleRuby(this)">ル</button>
+          <button class="btn-s" onclick="toggleSent('st47', this)">文</button>
+          <button class="btn-a" onclick="toggleAns('ans47', this)">A</button>
+        </div>
+      </div>
+      <div class="mondai-body">
+        <div class="choices">
+          <div class="choice-item"><span class="choice-num">1</span>合格する</div>
+          <div class="choice-item"><span class="choice-num">2</span>ために</div>
+          <div class="choice-item"><span class="choice-num">3</span>試験に</div>
+          <div class="choice-item"><span class="choice-num">4</span>一生懸命</div>
+        </div>
+        <div class="ans-box" id="ans47">
+          <div class="ans-box-correct">
+            <div class="ans-correct-block">
+              <div class="ans-correct-num">2</div>
+              <div class="ans-correct-desc">★ = ために（正答順：④一生懸命 ③試験に ★②ために ①合格する → 4312）</div>
+            </div>
+            <div class="ans-trans">完成文：「彼は一生懸命試験にために合格する勉強している。」→ 正しくは「試験に合格するために一生懸命勉強している」= Dia belajar keras untuk lulus ujian.<br>★の位置に「ために」が入る。答えは②（4312の順）。</div>
+          </div>
+          <div class="wrong-list">
+            <div class="wrong-item">
+              <div class="wrong-label">文法ポイント</div>
+              <div class="wrong-usage">「～するために」= untuk ~, demi ~. Menyatakan tujuan dari suatu tindakan.</div>
+              <div class="wrong-example">日本語を上手になるために、毎日練習している。</div>
+              <div class="wrong-trans">Untuk menjadi mahir bahasa Jepang, berlatih setiap hari.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.section-body -->
+</section>
+
+<!-- ===================== 問題9 ===================== -->
+<section class="section" id="mondai9">
+  <div class="section-header">問題9　文章の文法（文脈理解）</div>
+  <div class="section-body">
+    <div class="instruction-box">
+      <div class="inst-ja">次の文章を読んで、文章全体の内容を考えて、<span class="box-num">48</span>から<span class="box-num">52</span>の中に入る最もよいものを、１・２・３・４から一つ選びなさい。</div>
+      <div class="inst-id">Bacalah teks berikut, pertimbangkan isi keseluruhan teks, lalu pilih jawaban terbaik dari 1・2・3・4 untuk mengisi <span class="box-num">48</span> sampai <span class="box-num">52</span>.</div>
+    </div>
+
+    <div class="passage-box">
+      <div class="passage-title">わびさび</div>
+      <p>
+        「わびさび」とは、日本の伝統的な美意識の一つで、不完全さや、はかなさの中に美しさを見出す考え方だ。たとえば、欠けた茶碗や古びた庭石の中にも、独特の美しさが<span class="box-num">48</span>。西洋的な美の基準が「完璧さ」や「豪華さ」を重視するのとは対照的だと言えよう。
+      </p>
+      <p>
+        この美意識は日本文化の随所に見られる。枯山水の庭、茶道、俳句などは、すべてわびさびの影響を受けている。<span class="box-num">49</span>、現代の日本人の多くはわびさびを日常の言葉として知ってはいるものの、その本質を深く理解している人は少ないかもしれない。
+      </p>
+      <p>
+        わびさびの「わび」は、もとは「わびしい」（寂しく、みすぼらしい）という否定的な意味を持っていたが、茶道の世界で「簡素さの中の豊かさ」という美的価値に転換されていった。「さび」も同様に「古びた」「寂しい」という意味から、「時間の経過とともに生まれる深み」を表すようになった。
+      </p>
+      <p>
+        このような美意識は、グローバル化が進む現代社会において、<span class="box-num">50</span>ではないだろうかと改めて問われている。効率や合理性が優先される社会の中で、わびさびが示す「不完全さを受け入れる姿勢」は、<span class="box-num">51</span>、新しい価値観の模索につながるかもしれない。
+      </p>
+      <p>
+        人は完璧を求めるあまり、大切なものを見失うことがある。不完全な中にこそ、本当の美しさが<span class="box-num">52</span>、という感覚を、わびさびは私たちに教えてくれるのかもしれない。
+      </p>
+    </div>
+
+    <!-- 問48 -->
+    <div class="mondai-block">
+      <div class="mondai-header">
+        <div class="mondai-num">48</div>
+        <div class="line-wrap">
+          <div class="mondai-line"><span class="box-num">48</span></div>
+          <div class="mondai-trans" id="st48">Ada sesuatu yang (　) dalam hal itu.</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn-r" onclick="toggleRuby(this)">ル</button>
+          <button class="btn-s" onclick="toggleSent('st48', this)">文</button>
+          <button class="btn-a" onclick="toggleAns('ans48', this)">A</button>
+        </div>
+      </div>
+      <div class="mondai-body">
+        <div class="choices">
+          <div class="choice-item"><span class="choice-num">1</span>あるものだ</div>
+          <div class="choice-item"><span class="choice-num">2</span>ものがあります</div>
+          <div class="choice-item"><span class="choice-num">3</span>あるのではない</div>
+          <div class="choice-item"><span class="choice-num">4</span>ものではない</div>
+        </div>
+        <div class="ans-box" id="ans48">
+          <div class="ans-box-correct">
+            <div class="ans-correct-block">
+              <div class="ans-correct-num">2</div>
+              <div class="ans-correct-desc">ものがあります ― ada sesuatu yang (mengandung nilai tertentu)</div>
+            </div>
+            <div class="ans-trans">「独特の美しさがものがあります」→「独特の美しさがあります」+ 強調。「～ものがある」= ada sesuatu yang ~; digunakan untuk menekankan bahwa ada nilai/kualitas tertentu yang dirasakan.</div>
+          </div>
+          <div class="wrong-list">
+            <div class="wrong-item">
+              <div class="wrong-label">① あるものだ</div>
+              <div class="wrong-usage">「あるものだ」= memang ada (ungkapan rasa kagum/heran)</div>
+              <div class="wrong-example">世の中には面白い人があるものだ。</div>
+              <div class="wrong-trans">Memang ada-ada saja orang menarik di dunia ini.</div>
+            </div>
+            <div class="wrong-item">
+              <div class="wrong-label">③ あるのではない</div>
+              <div class="wrong-usage">「あるのではない」= bukanlah ada ~ (negasi)</div>
+            </div>
+            <div class="wrong-item">
+              <div class="wrong-label">④ ものではない</div>
+              <div class="wrong-usage">「ものではない」= seharusnya tidak ~ (larangan moral)</div>
+              <div class="wrong-example">人に嘘をつくものではない。</div>
+              <div class="wrong-trans">Seharusnya tidak berbohong kepada orang lain.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 問49 -->
+    <div class="mondai-block">
+      <div class="mondai-header">
+        <div class="mondai-num">49</div>
+        <div class="line-wrap">
+          <div class="mondai-line"><span class="box-num">49</span></div>
+          <div class="mondai-trans" id="st49">Kata penghubung yang tepat untuk kontras.</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn-r" onclick="toggleRuby(this)">ル</button>
+          <button class="btn-s" onclick="toggleSent('st49', this)">文</button>
+          <button class="btn-a" onclick="toggleAns('ans49', this)">A</button>
+        </div>
+      </div>
+      <div class="mondai-body">
+        <div class="choices">
+          <div class="choice-item"><span class="choice-num">1</span>そして</div>
+          <div class="choice-item"><span class="choice-num">2</span>それでも</div>
+          <div class="choice-item"><span class="choice-num">3</span>ところが</div>
+          <div class="choice-item"><span class="choice-num">4</span>したがって</div>
+        </div>
+        <div class="ans-box" id="ans49">
+          <div class="ans-box-correct">
+            <div class="ans-correct-block">
+              <div class="ans-correct-num">3</div>
+              <div class="ans-correct-desc">ところが ― namun, akan tetapi (kontras mengejutkan)</div>
+            </div>
+            <div class="ans-trans">前の文「わびさびは日本文化の随所に見られる」に対して、「現代人は本質を深く理解していない」という予想外の内容が続く。「ところが」は予想に反する展開を示す接続詞。</div>
+          </div>
+          <div class="wrong-list">
+            <div class="wrong-item">
+              <div class="wrong-label">① そして</div>
+              <div class="wrong-usage">そして：dan, kemudian (menambahkan informasi, bukan kontras)</div>
+            </div>
+            <div class="wrong-item">
+              <div class="wrong-label">② それでも</div>
+              <div class="wrong-usage">それでも：meski begitu, namun tetap (mengakui kondisi lalu melanjutkan dengan keteguhan)</div>
+            </div>
+            <div class="wrong-item">
+              <div class="wrong-label">④ したがって</div>
+              <div class="wrong-usage">したがって：oleh karena itu, dengan demikian (menunjukkan sebab-akibat)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 問50 -->
+    <div class="mondai-block">
+      <div class="mondai-header">
+        <div class="mondai-num">50</div>
+        <div class="line-wrap">
+          <div class="mondai-line"><span class="box-num">50</span></div>
+          <div class="mondai-trans" id="st50">Pilihan yang tepat untuk melengkapi kalimat pertanyaan retoris.</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn-r" onclick="toggleRuby(this)">ル</button>
+          <button class="btn-s" onclick="toggleSent('st50', this)">文</button>
+          <button class="btn-a" onclick="toggleAns('ans50', this)">A</button>
+        </div>
+      </div>
+      <div class="mondai-body">
+        <div class="choices">
+          <div class="choice-item"><span class="choice-num">1</span>こんなもの</div>
+          <div class="choice-item"><span class="choice-num">2</span>あんなもの</div>
+          <div class="choice-item"><span class="choice-num">3</span>そんなもの</div>
+          <div class="choice-item"><span class="choice-num">4</span>どんなもの</div>
+        </div>
+        <div class="ans-box" id="ans50">
+          <div class="ans-box-correct">
+            <div class="ans-correct-block">
+              <div class="ans-correct-num">1</div>
+              <div class="ans-correct-desc">こんなもの ― hal seperti ini (mengacu pada konsep yang baru dibahas)</div>
+            </div>
+            <div class="ans-trans">「こんなもの（わびさび）ではないだろうか」= bukankah hal seperti ini (wabi-sabi) dipertanyakan kembali? 「こんな」mengacu pada konsep わびさび yang sedang dibahas dalam teks, merujuk ke konsep yang dekat/baru saja disebutkan.</div>
+          </div>
+          <div class="wrong-list">
+            <div class="wrong-item">
+              <div class="wrong-label">② あんなもの</div>
+              <div class="wrong-usage">あんなもの：hal seperti itu (jauh dari kedua pihak; sering bernuansa meremehkan)</div>
+            </div>
+            <div class="wrong-item">
+              <div class="wrong-label">③ そんなもの</div>
+              <div class="wrong-usage">そんなもの：hal seperti itu (milik lawan bicara atau disebutkan sebelumnya dengan jarak)</div>
+            </div>
+            <div class="wrong-item">
+              <div class="wrong-label">④ どんなもの</div>
+              <div class="wrong-usage">どんなもの：hal macam apa (pertanyaan tentang jenis, tidak cocok untuk konteks ini)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 問51 -->
+    <div class="mondai-block">
+      <div class="mondai-header">
+        <div class="mondai-num">51</div>
+        <div class="line-wrap">
+          <div class="mondai-line"><span class="box-num">51</span></div>
+          <div class="mondai-trans" id="st51">Frasa yang tepat untuk menyatakan "berdasarkan cara berpikir tersebut".</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn-r" onclick="toggleRuby(this)">ル</button>
+          <button class="btn-s" onclick="toggleSent('st51', this)">文</button>
+          <button class="btn-a" onclick="toggleAns('ans51', this)">A</button>
+        </div>
+      </div>
+      <div class="mondai-body">
+        <div class="choices">
+          <div class="choice-item"><span class="choice-num">1</span>考え方のかわりに</div>
+          <div class="choice-item"><span class="choice-num">2</span>考え方によって</div>
+          <div class="choice-item"><span class="choice-num">3</span>考え方のもとで</div>
+          <div class="choice-item"><span class="choice-num">4</span>考え方にもかかわらず</div>
+        </div>
+        <div class="ans-box" id="ans51">
+          <div class="ans-box-correct">
+            <div class="ans-correct-block">
+              <div class="ans-correct-num">3</div>
+              <div class="ans-correct-desc">考え方のもとで ― di bawah/berdasarkan cara berpikir tersebut</div>
+            </div>
+            <div class="ans-trans">「～のもとで」= di bawah ~, berdasarkan ~, dengan landasan ~. Menyatakan bahwa sesuatu terjadi atau dilakukan dengan suatu prinsip/kondisi sebagai dasar. Konteks: cara berpikir wabi-sabi sebagai landasan pencarian nilai baru.</div>
+          </div>
+          <div class="wrong-list">
+            <div class="wrong-item">
+              <div class="wrong-label">① 考え方のかわりに</div>
+              <div class="wrong-usage">「～のかわりに」= sebagai ganti ~, alih-alih ~</div>
+              <div class="wrong-example">電車のかわりに、バスで行く。</div>
+              <div class="wrong-trans">Pergi naik bus sebagai ganti kereta.</div>
+            </div>
+            <div class="wrong-item">
+              <div class="wrong-label">② 考え方によって</div>
+              <div class="wrong-usage">「～によって」= bergantung pada ~, melalui ~ (cara/sarana)</div>
+              <div class="wrong-example">国によって文化が違う。</div>
+              <div class="wrong-trans">Budaya berbeda-beda tergantung negaranya.</div>
+            </div>
+            <div class="wrong-item">
+              <div class="wrong-label">④ 考え方にもかかわらず</div>
+              <div class="wrong-usage">「～にもかかわらず」= meskipun ~, walaupun ~ (berlawanan dengan harapan)</div>
+              <div class="wrong-example">反対にもかかわらず、計画を進めた。</div>
+              <div class="wrong-trans">Meskipun ada tentangan, rencana tetap dilanjutkan.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 問52 -->
+    <div class="mondai-block">
+      <div class="mondai-header">
+        <div class="mondai-num">52</div>
+        <div class="line-wrap">
+          <div class="mondai-line"><span class="box-num">52</span></div>
+          <div class="mondai-trans" id="st52">Kata penekanan yang tepat untuk menyatakan "justru di situ keindahan sejati dapat dirasakan".</div>
+        </div>
+        <div class="btn-group">
+          <button class="btn-r" onclick="toggleRuby(this)">ル</button>
+          <button class="btn-s" onclick="toggleSent('st52', this)">文</button>
+          <button class="btn-a" onclick="toggleAns('ans52', this)">A</button>
+        </div>
+      </div>
+      <div class="mondai-body">
+        <div class="choices">
+          <div class="choice-item"><span class="choice-num">1</span>だけ感じられる</div>
+          <div class="choice-item"><span class="choice-num">2</span>こそ感じられる</div>
+          <div class="choice-item"><span class="choice-num">3</span>さえ感じられる</div>
+          <div class="choice-item"><span class="choice-num">4</span>しか感じられない</div>
+        </div>
+        <div class="ans-box" id="ans52">
+          <div class="ans-box-correct">
+            <div class="ans-correct-block">
+              <div class="ans-correct-num">2</div>
+              <div class="ans-correct-desc">こそ感じられる ― justru (di situ) dapat dirasakan</div>
+            </div>
+            <div class="ans-trans">「不完全な中にこそ、本当の美しさが感じられる」= Justru di dalam ketidaksempurnaan, keindahan sejati dapat dirasakan. 「こそ」adalah partikel penekanan yang menyatakan "justru hal ini, bukan hal lain".</div>
+          </div>
+          <div class="wrong-list">
+            <div class="wrong-item">
+              <div class="wrong-label">① だけ感じられる</div>
+              <div class="wrong-usage">「～だけ感じられる」= hanya bisa dirasakan ~ (pembatasan)</div>
+            </div>
+            <div class="wrong-item">
+              <div class="wrong-label">③ さえ感じられる</div>
+              <div class="wrong-usage">「～さえ感じられる」= bahkan bisa dirasakan ~ (menambah unsur kejutan, biasanya untuk hal ekstrem)</div>
+              <div class="wrong-example">痛みさえ感じられなくなった。</div>
+              <div class="wrong-trans">Bahkan rasa sakit pun sudah tidak bisa dirasakan.</div>
+            </div>
+            <div class="wrong-item">
+              <div class="wrong-label">④ しか感じられない</div>
+              <div class="wrong-usage">「～しか感じられない」= hanya bisa merasakan ~ (dan tidak ada yang lain); artinya terbatas/negatif</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.section-body -->
+</section>
+
+</div><!-- /.main-wrap -->
+
+<script>
+function toggleRuby(btn) {
+  const block = btn.closest('.mondai-block');
+  const rubies = block.querySelectorAll('ruby');
+  const active = [...rubies].some(r => r.classList.contains('show'));
+  rubies.forEach(r => r.classList.toggle('show', !active));
+}
+
+function toggleSent(id, btn) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.toggle('show');
+  btn.style.opacity = el.classList.contains('show') ? '1' : '0.6';
+}
+
+function toggleAns(id, btn) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.toggle('show');
+  btn.textContent = el.classList.contains('show') ? '閉' : 'A';
+}
+</script>
+
+</body></html>
